@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TFGApp</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Planets</string>
+    <string name="tab_text_3">Satellites</string>
+    <string name="tab_text_4">More</string>
+    <string name="title">Title</string>
+</resources>
