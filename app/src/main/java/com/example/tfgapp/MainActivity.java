@@ -20,26 +20,41 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     TextView txtString;
     String imgUrl = "", date = "", description = "", title = "";
     CoordinatorLayout layout;
-    public String url= "https://api.nasa.gov/planetary/apod?api_key=DUYFvcd7IDPqXhozPfQkLJ8Dmz3A987BqBmQiZdr";
+    EnvReader envReader;
+    public String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        layout = new CoordinatorLayout(getApplicationContext());
 
         try {
-            run();
+            envReader = new EnvReader("src/main/java/.env");
+            url = getResources().getString(R.string.apod_url);
+            String api_key = envReader.getValue("NASA_API_KEY");
+//        url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", envVariables.get("NASA_API_KEY"));
+            System.out.println(api_key);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            layout = new CoordinatorLayout(getApplicationContext());
+
+            try {
+                run();
 
 
-        } catch (IOException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException | VersionError e) {
+            System.out.println("Error found when reading .env file");
             e.printStackTrace();
         }
+
     }
     void run() throws IOException {
 
@@ -76,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             textView_date.setText(String.format("Date:%s", date));
                             textView_date.setTextSize(8.0f);
                             textView_desc.setText(String.format("Description: %s", description));
-                            textView_desc.setTextSize(10.0f);
+                            textView_desc.setTextSize(7.0f);
                             ImageView imageView = findViewById(R.id.imageView);
                             Glide.with(MainActivity.this).load(imgUrl).into(imageView);
 

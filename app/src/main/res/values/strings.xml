@@ -5,4 +5,5 @@
     <string name="tab_text_3">Satellites</string>
     <string name="tab_text_4">More</string>
     <string name="title">Title</string>
+    <string name="apod_url">https://api.nasa.gov/planetary/apod?api_key=</string>
 </resources>
