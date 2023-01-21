@@ -1,6 +1,5 @@
 package com.example.tfgapp;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,12 +7,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -21,11 +20,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
 public class MainActivity extends AppCompatActivity {
 
     TextView txtString;
-    ImageView imageString;
+    String imgUrl = "", date = "", description = "", title = "";
     CoordinatorLayout layout;
     public String url= "https://api.nasa.gov/planetary/apod?api_key=DUYFvcd7IDPqXhozPfQkLJ8Dmz3A987BqBmQiZdr";
 
@@ -34,16 +32,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         layout = new CoordinatorLayout(getApplicationContext());
-//        txtString= (TextView)findViewById(R.id.image_title);
-        imageString= (ImageView)findViewById(R.id.imageView);
 
         try {
             run();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
     void run() throws IOException {
 
         OkHttpClient client = new OkHttpClient();
@@ -63,62 +60,34 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     final String myResponse = response.body().string();
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String imgUrl = "", date = "", description = "", title = "";
-                            try {
+                    MainActivity.this.runOnUiThread(() -> {
+                        try {
 
-                                JSONObject obj = new JSONObject(myResponse);
-                                imgUrl = obj.getString("url");
-                                date = obj.getString("date");
-                                description = obj.getString("explanation");
-                                title = obj.getString("title");
+                            JSONObject obj = new JSONObject(myResponse);
+                            imgUrl = obj.getString("url");
+                            date = obj.getString("date");
+                            description = obj.getString("explanation");
+                            title = obj.getString("title");
+                            TextView textView_title = findViewById(R.id.textView1);
+                            TextView textView_date = findViewById(R.id.textView2);
+                            TextView textView_desc = findViewById(R.id.textView3);
+                            textView_title.setText(String.format("Title: %s", title));
+                            textView_title.setTextSize(12.0f);
+                            textView_date.setText(String.format("Date:%s", date));
+                            textView_date.setTextSize(8.0f);
+                            textView_desc.setText(String.format("Description: %s", description));
+                            textView_desc.setTextSize(10.0f);
+                            ImageView imageView = findViewById(R.id.imageView);
+                            Glide.with(MainActivity.this).load(imgUrl).into(imageView);
 
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-//                            txtString.setText(title);
-
-                            imageString.setImageDrawable(LoadImageFromWebOperations(imgUrl));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     });
                 }
 
+
             }
         });
     }
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream URLcontent = (InputStream) new URL(url).getContent();
-            return Drawable.createFromStream(URLcontent, "");
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    //    private ActivityMainBinding binding;
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
-//
-//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-//        ViewPager viewPager = binding.viewPager;
-//        viewPager.setAdapter(sectionsPagerAdapter);
-//        TabLayout tabs = binding.tabs;
-//        tabs.setupWithViewPager(viewPager);
-//        FloatingActionButton fab = binding.fab;
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-//    }
 }
