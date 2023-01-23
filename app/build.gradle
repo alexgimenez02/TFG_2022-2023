@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
 }
-
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 android {
     namespace 'com.example.tfgapp'
     compileSdk 33
@@ -20,7 +21,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue("string", "NASA_API_KEY", localProperties['NASA_API_KEY'])
         }
+        debug {
+            resValue("string", "NASA_API_KEY", localProperties['NASA_API_KEY'])
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,7 +50,10 @@ dependencies {
     api 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     api 'com.squareup.okhttp:okhttp:2.2.0'
     api 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
 }

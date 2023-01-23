@@ -1,11 +1,19 @@
 package com.example.tfgapp;
 
+import android.annotation.SuppressLint;
+import android.app.WallpaperManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -26,36 +34,64 @@ public class MainActivity extends AppCompatActivity {
 
     TextView txtString;
     String imgUrl = "", date = "", description = "", title = "";
-    CoordinatorLayout layout;
-    EnvReader envReader;
+
+
     public String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        url = getResources().getString(R.string.apod_url);
+        url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
         try {
-            envReader = new EnvReader("src/main/java/.env");
-            url = getResources().getString(R.string.apod_url);
-            String api_key = envReader.getValue("NASA_API_KEY");
-//        url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", envVariables.get("NASA_API_KEY"));
-            System.out.println(api_key);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            layout = new CoordinatorLayout(getApplicationContext());
-
-            try {
-                run();
+            run();
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException | VersionError e) {
-            System.out.println("Error found when reading .env file");
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        Button homeButton = findViewById(R.id.Home);
+        Button planetsButton = findViewById(R.id.planets);
+        Button satellitesButton = findViewById(R.id.satellites);
+        Button othersButton = findViewById(R.id.others);
 
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Already on this activity!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        planetsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, PlanetsDrawerActivity.class);
+//                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Going to planets selection!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        satellitesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SatellitesDrawerActivity.class);
+//                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Going to satellites selection!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        othersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OthersActivity.class);
+                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Going to others!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
     void run() throws IOException {
 
         OkHttpClient client = new OkHttpClient();
@@ -65,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
@@ -94,6 +131,33 @@ public class MainActivity extends AppCompatActivity {
                             textView_desc.setTextSize(7.0f);
                             ImageView imageView = findViewById(R.id.imageView);
                             Glide.with(MainActivity.this).load(imgUrl).into(imageView);
+                            TextView dwld =findViewById(R.id.Download);
+                            TextView background =findViewById(R.id.SABG);
+                            dwld.setClickable(true);
+                            background.setClickable(true);
+                            dwld.setMovementMethod(LinkMovementMethod.getInstance());
+                            background.setMovementMethod(LinkMovementMethod.getInstance());
+                            String text = String.format("<a href='%s'> Download </a>", imgUrl);
+                            dwld.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT));
+                            background.setClickable(true);
+                            background.setOnClickListener(new View.OnClickListener(){
+
+                                @SuppressLint("ResourceType")
+                                @Override
+                                public void onClick(View view) {
+                                    imageView.buildDrawingCache(true);
+                                    Bitmap bmp = imageView.getDrawingCache(true);
+                                    WallpaperManager m=WallpaperManager.getInstance(MainActivity.this);
+
+                                    try {
+                                        m.setBitmap(bmp);
+                                        Toast.makeText(MainActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(MainActivity.this, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
