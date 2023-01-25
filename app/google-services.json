@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "896603990098",
+    "project_id": "tfgapp-832d8",
+    "storage_bucket": "tfgapp-832d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896603990098:android:e523e8cfb6f9f05a7e178b",
+        "android_client_info": {
+          "package_name": "com.example.tfgapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896603990098-i57ctqrhijm5hmbvsql7p85qs9qn8g3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqUSd01hN8IETqkS2pJKoi5ExUcUMuMKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896603990098-i57ctqrhijm5hmbvsql7p85qs9qn8g3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

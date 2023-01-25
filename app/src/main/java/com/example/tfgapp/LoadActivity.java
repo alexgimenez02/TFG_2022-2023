@@ -38,7 +38,7 @@ public class LoadActivity extends AppCompatActivity {
             try {
                 run();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }, 3000);
 
@@ -75,7 +75,6 @@ public class LoadActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
 
                     if (response.body() != null) {
-                        final String myResponse = response.body().string();
                         LoadActivity.this.runOnUiThread(() -> {
                         });
                     }
