@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.DragEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -130,7 +133,49 @@ public class MainActivity extends AppCompatActivity {
                             textView_desc.setText(String.format("Description: %s", description));
                             textView_desc.setTextSize(7.0f);
                             ImageView imageView = findViewById(R.id.imageView);
+                            ImageView largeImageView = findViewById(R.id.largeImageView);
                             Glide.with(MainActivity.this).load(imgUrl).into(imageView);
+                            Glide.with(MainActivity.this).load(imgUrl).into(largeImageView);
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    ViewGroup rootView=findViewById(R.id.MainLayout);
+
+                                    for(int i=0;i<rootView.getChildCount();i++){
+
+                                        View currView=rootView.getChildAt(i);
+
+
+
+                                            //Do something
+                                            currView.setVisibility(View.INVISIBLE);
+
+
+                                    }
+
+                                    largeImageView.setForegroundGravity(100);
+                                    largeImageView.setVisibility(View.VISIBLE);
+
+
+                                }
+                            });
+                            largeImageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    ViewGroup rootView=findViewById(R.id.MainLayout);
+
+                                    for(int i=0;i<rootView.getChildCount();i++){
+
+                                        View currView=rootView.getChildAt(i);
+                                        //Do something
+                                        currView.setVisibility(View.VISIBLE);
+                                    }
+                                    largeImageView.setForegroundGravity(100);
+                                    largeImageView.setVisibility(View.INVISIBLE);
+                                }
+
+                            });
+
                             TextView dwld =findViewById(R.id.Download);
                             TextView background =findViewById(R.id.SABG);
                             dwld.setClickable(true);
