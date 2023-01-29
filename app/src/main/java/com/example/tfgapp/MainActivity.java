@@ -34,10 +34,13 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     TextView txtString;
-    String imgUrl = "", date = "", description = "", title = "";
+    String imgUrl = "";
+    String date = "";
+    String description = "";
+    String title = "";
 
 
-    public String url;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         url = getResources().getString(R.string.apod_url);
         url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
-        try {
-            run();
+        run();
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Button homeButton = findViewById(R.id.Home);
         Button planetsButton = findViewById(R.id.planets);
         Button satellitesButton = findViewById(R.id.satellites);
