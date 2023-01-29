@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,42 +58,26 @@ public class MainActivity extends AppCompatActivity {
         Button satellitesButton = findViewById(R.id.satellites);
         Button othersButton = findViewById(R.id.others);
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//                startActivity(intent);
-                Toast.makeText(MainActivity.this, "Already on this activity!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        planetsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        homeButton.setOnClickListener(view -> Toast.makeText(MainActivity.this, "Already on this activity!", Toast.LENGTH_SHORT).show());
+        planetsButton.setOnClickListener(view -> {
 //                Intent intent = new Intent(MainActivity.this, PlanetsDrawerActivity.class);
 //                startActivity(intent);
-                Toast.makeText(MainActivity.this, "Going to planets selection!", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(MainActivity.this, "Going to planets selection!", Toast.LENGTH_SHORT).show();
         });
-        satellitesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        satellitesButton.setOnClickListener(view -> {
 //                Intent intent = new Intent(MainActivity.this, SatellitesDrawerActivity.class);
 //                startActivity(intent);
-                Toast.makeText(MainActivity.this, "Going to satellites selection!", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(MainActivity.this, "Going to satellites selection!", Toast.LENGTH_SHORT).show();
         });
-        othersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, OthersActivity.class);
-                startActivity(intent);
-                Toast.makeText(MainActivity.this, "Going to others!", Toast.LENGTH_SHORT).show();
-            }
+        othersButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, OthersActivity.class);
+            startActivity(intent);
+            Toast.makeText(MainActivity.this, "Going to others!", Toast.LENGTH_SHORT).show();
         });
     }
 
 
-    void run() throws IOException {
+    void run(){
 
         OkHttpClient client = new OkHttpClient();
 
@@ -123,57 +105,50 @@ public class MainActivity extends AppCompatActivity {
                             date = obj.getString("date");
                             description = obj.getString("explanation");
                             title = obj.getString("title");
-                            TextView textView_title = findViewById(R.id.textView1);
-                            TextView textView_date = findViewById(R.id.textView2);
-                            TextView textView_desc = findViewById(R.id.textView3);
-                            textView_title.setText(String.format("Title: %s", title));
-                            textView_title.setTextSize(12.0f);
-                            textView_date.setText(String.format("Date:%s", date));
-                            textView_date.setTextSize(8.0f);
-                            textView_desc.setText(String.format("Description: %s", description));
-                            textView_desc.setTextSize(7.0f);
+                            TextView textViewTitle = findViewById(R.id.textView1);
+                            TextView textViewDate = findViewById(R.id.textView2);
+                            TextView textViewDesc = findViewById(R.id.textView3);
+                            textViewTitle.setText(String.format("Title: %s", title));
+                            textViewTitle.setTextSize(12.0f);
+                            textViewDate.setText(String.format("Date:%s", date));
+                            textViewDate.setTextSize(8.0f);
+                            textViewDesc.setText(String.format("Description: %s", description));
+                            textViewDesc.setTextSize(7.0f);
                             ImageView imageView = findViewById(R.id.imageView);
                             ImageView largeImageView = findViewById(R.id.largeImageView);
                             Glide.with(MainActivity.this).load(imgUrl).into(imageView);
                             Glide.with(MainActivity.this).load(imgUrl).into(largeImageView);
-                            imageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ViewGroup rootView=findViewById(R.id.MainLayout);
+                            imageView.setOnClickListener(view -> {
+                                ViewGroup rootView=findViewById(R.id.MainLayout);
 
-                                    for(int i=0;i<rootView.getChildCount();i++){
+                                for(int i=0;i<rootView.getChildCount();i++){
 
-                                        View currView=rootView.getChildAt(i);
+                                    View currView=rootView.getChildAt(i);
 
 
 
-                                            //Do something
-                                            currView.setVisibility(View.INVISIBLE);
-
-
-                                    }
-
-                                    largeImageView.setForegroundGravity(100);
-                                    largeImageView.setVisibility(View.VISIBLE);
-
-
-                                }
-                            });
-                            largeImageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ViewGroup rootView=findViewById(R.id.MainLayout);
-
-                                    for(int i=0;i<rootView.getChildCount();i++){
-
-                                        View currView=rootView.getChildAt(i);
                                         //Do something
-                                        currView.setVisibility(View.VISIBLE);
-                                    }
-                                    largeImageView.setForegroundGravity(100);
-                                    largeImageView.setVisibility(View.INVISIBLE);
+                                        currView.setVisibility(View.INVISIBLE);
+
+
                                 }
 
+                                largeImageView.setForegroundGravity(100);
+                                largeImageView.setVisibility(View.VISIBLE);
+
+
+                            });
+                            largeImageView.setOnClickListener(view -> {
+                                ViewGroup rootView=findViewById(R.id.MainLayout);
+
+                                for(int i=0;i<rootView.getChildCount();i++){
+
+                                    View currView=rootView.getChildAt(i);
+                                    //Do something
+                                    currView.setVisibility(View.VISIBLE);
+                                }
+                                largeImageView.setForegroundGravity(100);
+                                largeImageView.setVisibility(View.INVISIBLE);
                             });
 
                             TextView dwld =findViewById(R.id.Download);
