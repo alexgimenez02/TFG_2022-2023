@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.tfgapp.HelperClasses.DatabaseManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     String date = "";
     String description = "";
     String title = "";
-
+    DatabaseManager dbManager;
 
     private String url;
 
@@ -46,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        url = getResources().getString(R.string.apod_url);
-        url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
         run();
 
 
