@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
                             TextView textViewTitle = findViewById(R.id.textView1);
                             TextView textViewDate = findViewById(R.id.textView2);
                             TextView textViewDesc = findViewById(R.id.textView3);
-                            textViewTitle.setText(String.format("Title: %s", title));
+                            textViewTitle.setText(String.format("%s", title));
                             textViewTitle.setTextSize(12.0f);
-                            textViewDate.setText(String.format("Date:%s", date));
+                            textViewDate.setText(String.format("%s", date));
                             textViewDate.setTextSize(8.0f);
-                            textViewDesc.setText(String.format("Description: %s", description));
+                            textViewDesc.setText(String.format("%s", description));
                             textViewDesc.setTextSize(7.0f);
                             ImageView imageView = findViewById(R.id.imageView);
                             ImageView largeImageView = findViewById(R.id.largeImageView);
