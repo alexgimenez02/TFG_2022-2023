@@ -17,22 +17,30 @@ public class OthersActivity extends AppCompatActivity {
         Button planetsButton = findViewById(R.id.planets);
         Button satellitesButton = findViewById(R.id.satellites);
         Button othersButton = findViewById(R.id.others);
+        Button configButton = findViewById(R.id.Config);
+        Button gamesButton = findViewById(R.id.Games);
+        Button queryButton = findViewById(R.id.Queries);
+        Button sendFeedbackButton = findViewById(R.id.BugReport);
 
         homeButton.setOnClickListener(view -> {
             Intent intent = new Intent(OthersActivity.this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(OthersActivity.this, "Going to Home page!", Toast.LENGTH_SHORT).show();
         });
         planetsButton.setOnClickListener(view -> {
-//                Intent intent = new Intent(MainActivity.this, PlanetsDrawerActivity.class);
-//                startActivity(intent);
-            Toast.makeText(OthersActivity.this, "Going to planets selection!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(OthersActivity.this, PlanetsSelector.class);
+            startActivity(intent);
         });
         satellitesButton.setOnClickListener(view -> {
-//                Intent intent = new Intent(MainActivity.this, SatellitesDrawerActivity.class);
-//                startActivity(intent);
-            Toast.makeText(OthersActivity.this, "Going to satellites selection!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(OthersActivity.this, Satellites.class);
+            startActivity(intent);
         });
         othersButton.setOnClickListener(view -> Toast.makeText(OthersActivity.this, "Already in this activity!", Toast.LENGTH_SHORT).show());
+
+        configButton.setOnClickListener(view -> startActivity(new Intent(OthersActivity.this, ConfigurationActivity.class)));
+        gamesButton.setOnClickListener(view -> startActivity(new Intent(OthersActivity.this, GamesSelectorActivity.class)));
+        queryButton.setOnClickListener(view -> startActivity(new Intent(OthersActivity.this, QueryActivity.class)));
+        sendFeedbackButton.setOnClickListener(view -> startActivity(new Intent(OthersActivity.this, ReportBugActivity.class)));
+
+
     }
 }

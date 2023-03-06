@@ -1,20 +1,29 @@
 package com.example.tfgapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tfgapp.HelperClasses.DatabaseManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +35,11 @@ import okhttp3.Response;
 public class LoadActivity extends AppCompatActivity {
 
     protected DatabaseManager dbManager;
-    private static List<String> urls;
+    private LinkedList<String> urls;
+    private LinkedList<String> dbKeys;
+    private LinkedList<Boolean> allItemsLoaded;
+    private HashMap<String, JSONObject> dbObjects;
+    int dbKeyIndex = 0;
 
 
     @Override
@@ -34,16 +47,43 @@ public class LoadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
         String url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
-        urls.add(url);
         dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
-        JSONObject test = new JSONObject();
-        try {
-            test.put("Hello", "World");
-            dbManager.writeToDatabase("test",test);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        urls = new LinkedList<>();
+        dbKeys = new LinkedList<>();
+        allItemsLoaded = new LinkedList<>();
+        dbObjects = new HashMap<>();
+        urls.add(url);
+        dbKeys.add("APOD");
+        urls.add("https://");
+        //read all database
+        for(String key: dbKeys){
+            DatabaseReference dbRef = dbManager.databaseIntance.getReference(key);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String readedValue = (String) dataSnapshot.getValue();
+                    try {
+
+                            assert readedValue != null;
+                            dbObjects.put(key,new JSONObject(readedValue)) ;
+
+                    } catch (JSONException | AssertionError e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
         }
-        new Handler().postDelayed(this::run, 3000);
+        dbKeys.add("final");
+        dbObjects.put("final",null);
+        //Run all api calls
+        new Handler(Looper.getMainLooper()).postDelayed(this::run, 3000);
 
 
     }
@@ -53,18 +93,40 @@ public class LoadActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         Request request = null;
+
         for (String url: urls) {
-            try{
-                request = new Request.Builder()
-                        .url(url)
-                        .build();
-            }catch (Exception e){
-                e.printStackTrace();
+
+            if(dbObjects.get(dbKeys.get(dbKeyIndex)) == null){
+                try{
+                    request = new Request.Builder()
+                            .url(url)
+                            .build();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    request = null;
+                }
+            }else {
+                dbKeyIndex++;
+                continue;
             }
+
+
             if(request == null){
-                Toast.makeText(LoadActivity.this, "Loading all API calls!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoadActivity.this,MainActivity.class);
-                startActivity(intent);
+                boolean startMainActivity = true;
+                for(Boolean check: LoadActivity.this.allItemsLoaded){
+                    if (Boolean.FALSE.equals(check)) {
+                        startMainActivity = false;
+                        break;
+                    }
+                }
+                if(startMainActivity){
+                    Toast.makeText(LoadActivity.this, "Loading all API calls!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoadActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    break;
+                }else{
+                    Toast.makeText(LoadActivity.this, "API calls failed to load!", Toast.LENGTH_SHORT).show();
+                }
             }else{
                 client.newCall(request).enqueue(new Callback() {
 
@@ -75,11 +137,19 @@ public class LoadActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        final String myResponse = response.body().string();
+                        LoadActivity.this.runOnUiThread(() -> {
+                            try {
+                                JSONObject obj = new JSONObject(myResponse);
+                                dbManager.writeToDatabase(LoadActivity.this.dbKeys.get(LoadActivity.this.dbKeyIndex),obj);
+                                LoadActivity.this.allItemsLoaded.add(LoadActivity.this.dbKeyIndex, true);
+                                LoadActivity.this.dbKeyIndex++;
 
-                        if (response.body() != null) {
-                            LoadActivity.this.runOnUiThread(() -> {
-                            });
-                        }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
                     }
                 });
             }

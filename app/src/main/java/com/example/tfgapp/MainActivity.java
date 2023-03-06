@@ -8,28 +8,25 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.tfgapp.HelperClasses.DatabaseManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Bundle extras = getIntent().getExtras();
+        dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
         run();
 
 
@@ -57,133 +56,92 @@ public class MainActivity extends AppCompatActivity {
 
         homeButton.setOnClickListener(view -> Toast.makeText(MainActivity.this, "Already on this activity!", Toast.LENGTH_SHORT).show());
         planetsButton.setOnClickListener(view -> {
-//                Intent intent = new Intent(MainActivity.this, PlanetsDrawerActivity.class);
-//                startActivity(intent);
-            Toast.makeText(MainActivity.this, "Going to planets selection!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PlanetsSelector.class);
+                startActivity(intent);
         });
         satellitesButton.setOnClickListener(view -> {
-//                Intent intent = new Intent(MainActivity.this, SatellitesDrawerActivity.class);
-//                startActivity(intent);
-            Toast.makeText(MainActivity.this, "Going to satellites selection!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, Satellites.class);
+                startActivity(intent);
         });
         othersButton.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, OthersActivity.class);
             startActivity(intent);
-            Toast.makeText(MainActivity.this, "Going to others!", Toast.LENGTH_SHORT).show();
         });
     }
 
 
     void run(){
+        if (dbManager.databaseIsEmpty().get()) {
+            MainActivity.this.runOnUiThread(() -> {
+                try {
+                    DatabaseReference dbRef = dbManager.databaseIntance.getReference("APOD");
+                    final JSONObject[] obj = new JSONObject[1];
+                    dbRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String readedValue = (String) dataSnapshot.getValue();
+                            try {
+                                assert readedValue != null;
+                                obj[0] = new JSONObject(readedValue);
+                                imgUrl = obj[0].getString("url");
+                                date = obj[0].getString("date");
+                                description = obj[0].getString("explanation");
+                                title = obj[0].getString("title");
+                                TextView textViewTitle = findViewById(R.id.textView1);
+                                TextView textViewDate = findViewById(R.id.textView2);
+                                TextView textViewDesc = findViewById(R.id.textView3);
+                                textViewTitle.setText(String.format("%s", title));
+                                textViewTitle.setTextSize(12.0f);
+                                textViewDate.setText(String.format("%s", date));
+                                textViewDate.setTextSize(8.0f);
+                                textViewDesc.setText(String.format("%s", description));
+                                textViewDesc.setTextSize(7.0f);
+                                ImageView imageView = findViewById(R.id.imageView);
+                                Glide.with(MainActivity.this).load(imgUrl).into(imageView);
+                                TextView dwld =findViewById(R.id.Download);
+                                TextView background =findViewById(R.id.SABG);
+                                dwld.setClickable(true);
+                                background.setClickable(true);
+                                dwld.setMovementMethod(LinkMovementMethod.getInstance());
+                                background.setMovementMethod(LinkMovementMethod.getInstance());
+                                String text = String.format("<a href='%s'> Download </a>", imgUrl);
+                                dwld.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
+                                background.setClickable(true);
+                                background.setOnClickListener(new View.OnClickListener(){
 
-        OkHttpClient client = new OkHttpClient();
+                                    @SuppressLint("ResourceType")
+                                    @Override
+                                    public void onClick(View view) {
+                                        imageView.buildDrawingCache(true);
+                                        Bitmap bmp = imageView.getDrawingCache(true);
+                                        WallpaperManager m=WallpaperManager.getInstance(MainActivity.this);
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                call.cancel();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                if (response.body() != null) {
-                    final String myResponse = response.body().string();
-                    MainActivity.this.runOnUiThread(() -> {
-                        try {
-
-                            JSONObject obj = new JSONObject(myResponse);
-                            imgUrl = obj.getString("url");
-                            date = obj.getString("date");
-                            description = obj.getString("explanation");
-                            title = obj.getString("title");
-                            TextView textViewTitle = findViewById(R.id.textView1);
-                            TextView textViewDate = findViewById(R.id.textView2);
-                            TextView textViewDesc = findViewById(R.id.textView3);
-                            textViewTitle.setText(String.format("%s", title));
-                            textViewTitle.setTextSize(12.0f);
-                            textViewDate.setText(String.format("%s", date));
-                            textViewDate.setTextSize(8.0f);
-                            textViewDesc.setText(String.format("%s", description));
-                            textViewDesc.setTextSize(7.0f);
-                            ImageView imageView = findViewById(R.id.imageView);
-                            ImageView largeImageView = findViewById(R.id.largeImageView);
-                            Glide.with(MainActivity.this).load(imgUrl).into(imageView);
-                            Glide.with(MainActivity.this).load(imgUrl).into(largeImageView);
-                            imageView.setOnClickListener(view -> {
-                                ViewGroup rootView=findViewById(R.id.MainLayout);
-
-                                for(int i=0;i<rootView.getChildCount();i++){
-
-                                    View currView=rootView.getChildAt(i);
-
-
-
-                                        //Do something
-                                        currView.setVisibility(View.INVISIBLE);
-
-
-                                }
-
-                                largeImageView.setForegroundGravity(100);
-                                largeImageView.setVisibility(View.VISIBLE);
-
-
-                            });
-                            largeImageView.setOnClickListener(view -> {
-                                ViewGroup rootView=findViewById(R.id.MainLayout);
-
-                                for(int i=0;i<rootView.getChildCount();i++){
-
-                                    View currView=rootView.getChildAt(i);
-                                    //Do something
-                                    currView.setVisibility(View.VISIBLE);
-                                }
-                                largeImageView.setForegroundGravity(100);
-                                largeImageView.setVisibility(View.INVISIBLE);
-                            });
-
-                            TextView dwld =findViewById(R.id.Download);
-                            TextView background =findViewById(R.id.SABG);
-                            dwld.setClickable(true);
-                            background.setClickable(true);
-                            dwld.setMovementMethod(LinkMovementMethod.getInstance());
-                            background.setMovementMethod(LinkMovementMethod.getInstance());
-                            String text = String.format("<a href='%s'> Download </a>", imgUrl);
-                            dwld.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_COMPACT));
-                            background.setClickable(true);
-                            background.setOnClickListener(new View.OnClickListener(){
-
-                                @SuppressLint("ResourceType")
-                                @Override
-                                public void onClick(View view) {
-                                    imageView.buildDrawingCache(true);
-                                    Bitmap bmp = imageView.getDrawingCache(true);
-                                    WallpaperManager m=WallpaperManager.getInstance(MainActivity.this);
-
-                                    try {
-                                        m.setBitmap(bmp);
-                                        Toast.makeText(MainActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(MainActivity.this, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show();
+                                        try {
+                                            m.setBitmap(bmp);
+                                            Toast.makeText(MainActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(MainActivity.this, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            } catch (JSONException | AssertionError e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
                         }
                     });
+
+
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-
-
-            }
-        });
+            });
+        }
     }
 }

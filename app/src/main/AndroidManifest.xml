@@ -18,6 +18,41 @@
         android:theme="@style/Theme.TFGApp"
         tools:targetApi="31">
         <activity
+            android:name=".ReportBugActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QueryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_query"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
+            android:name=".GamesSelectorActivity"
+            android:exported="false"
+            android:label="@string/title_activity_games_selector"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
+            android:name=".ConfigurationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_configuration" />
+        <activity
+            android:name=".MarsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_mars"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
+            android:name=".EarthActivity"
+            android:exported="false"
+            android:label="@string/title_activity_earth"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
+            android:name=".Satellites"
+            android:exported="false"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
+            android:name=".PlanetsSelector"
+            android:exported="false"
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
+        <activity
             android:name=".LoadActivity"
             android:exported="true"
             android:theme="@style/Theme.TFGApp.NoActionBar">
@@ -30,12 +65,11 @@
         <activity
             android:name=".OthersActivity"
             android:exported="false"
-            android:theme="@style/Theme.TFGApp.NoActionBar"/>
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.TFGApp.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.TFGApp.NoActionBar" />
     </application>
 
 </manifest>

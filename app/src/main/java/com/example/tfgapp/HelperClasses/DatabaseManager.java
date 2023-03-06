@@ -12,32 +12,43 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class DatabaseManager {
     private int limitTime = 24*60*60*1000; //24 hours
-    FirebaseDatabase databaseIntance;
+    private final HashMap<String, JSONObject> dbLoadedItems;
+    public FirebaseDatabase databaseIntance;
 
     public DatabaseManager(String url){
         databaseIntance = FirebaseDatabase.getInstance(url != null ? url : "");
+        dbLoadedItems = new HashMap<>();
     }
     public void writeToDatabase(@NonNull String path, @NonNull JSONObject content){
         DatabaseReference dbReference = databaseIntance.getReference(path);
         dbReference.setValue(content.toString()).addOnFailureListener(Throwable::printStackTrace);
     }
 
-    public void readFromDatabase(@NonNull String path){
-        final AtomicReference<JSONObject> readValue = new AtomicReference<>();
+    public JSONObject readFromDatabase(@NonNull String path){
         DatabaseReference dbReference = databaseIntance.getReference(path);
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                readValue.set(dataSnapshot.getValue(JSONObject.class));
+                String readedValue = (String) dataSnapshot.getValue();
+                String key = dataSnapshot.getKey();
+                JSONObject obj;
+                try {
+                    obj = new JSONObject(readedValue);
+                    DatabaseManager.this.dbLoadedItems.putIfAbsent(key, obj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -46,6 +57,7 @@ public class DatabaseManager {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        return dbLoadedItems.get(path);
     }
     public AtomicBoolean databaseIsEmpty(){
         final AtomicBoolean isEmpty = new AtomicBoolean(true);
@@ -68,7 +80,22 @@ public class DatabaseManager {
         System.out.println(isEmpty.get() ? "True" : "False");
         return isEmpty;
     }
+    public void deleteItemFromDatabase(@NonNull String path){
+        DatabaseReference dbReference = databaseIntance.getReference();
+        dbReference.child(path).getDatabase().getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    dataSnapshot.getRef().removeValue();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "onCancelled", error.toException());
+            }
+        });
+    }
     /**
      * @param time: Time in ms
      *
