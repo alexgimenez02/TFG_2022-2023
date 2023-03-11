@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DatabaseManager {
-    private int limitTime = 24*60*60*1000; //24 hours
     private final HashMap<String, JSONObject> dbLoadedItems;
     public FirebaseDatabase databaseIntance;
 
@@ -96,20 +95,9 @@ public class DatabaseManager {
             }
         });
     }
-    /**
-     * @param time: Time in ms
-     *
-     * */
-    public void deleteAfterTimeHasPassed(int time){
-        if(time >= limitTime) {
-                DatabaseReference dbReference = databaseIntance.getReference();
-                dbReference.setValue(null);
-        }
-    }
-
-
-    public void changeLimitTime(int time){
-        limitTime = time;
+    public void clearDatabase(){
+            DatabaseReference dbReference = databaseIntance.getReference();
+            dbReference.setValue(null);
     }
 
 }
