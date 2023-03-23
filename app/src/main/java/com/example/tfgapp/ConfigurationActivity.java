@@ -29,6 +29,7 @@ public class ConfigurationActivity extends AppCompatActivity {
                     .commit();
         }
         SettingsFragment.c = ConfigurationActivity.this;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -42,11 +43,12 @@ public class ConfigurationActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
-            isLightMode = false;
             SwitchPreference darkLightPreference = getPreferenceManager().findPreference("lightDark");
             SwitchPreference clearDatabaseCachePreference = getPreferenceManager().findPreference("cache");
-
+            isLightMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO;
             assert clearDatabaseCachePreference != null;
+            clearDatabaseCachePreference.setChecked(false);
+
             clearDatabaseCachePreference.setOnPreferenceClickListener(preference -> {
                 dbManager.clearDatabase();
                 Toast.makeText(c, "Database caché cleared!", Toast.LENGTH_LONG).show();

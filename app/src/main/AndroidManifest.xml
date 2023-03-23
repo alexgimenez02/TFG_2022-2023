@@ -33,7 +33,8 @@
         <activity
             android:name=".ConfigurationActivity"
             android:exported="false"
-            android:label="@string/title_activity_configuration" />
+            android:label="@string/title_activity_configuration"
+           android:parentActivityName=".OthersActivity" />
         <activity
             android:name=".MarsActivity"
             android:exported="false"
