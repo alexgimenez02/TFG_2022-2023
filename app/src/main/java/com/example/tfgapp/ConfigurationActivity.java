@@ -1,12 +1,9 @@
 package com.example.tfgapp;
 
-import static android.app.UiModeManager.MODE_NIGHT_NO;
-import static android.app.UiModeManager.MODE_NIGHT_YES;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,53 +15,54 @@ import com.example.tfgapp.HelperClasses.DatabaseManager;
 
 public class ConfigurationActivity extends AppCompatActivity {
 
+    private DatabaseManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
+        Button dbCacheButton = findViewById(R.id.ClearDBButton);
+        Button termsAndConds = findViewById(R.id.TermsAndConditions);
+        Button greetings = findViewById(R.id.Greetings);
+
+        dbCacheButton.setOnClickListener(view -> {
+            Toast.makeText(ConfigurationActivity.this, "Database caché cleared!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ConfigurationActivity.this, LoadActivity.class);
+            startActivity(intent);
+        });
+        termsAndConds.setOnClickListener(view -> {
+            String url = "https://pastebin.com/nf1pbgDF";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+        greetings.setOnClickListener(view -> {
+            String url = "https://pastebin.com/W3tcHQ7G";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-        SettingsFragment.c = ConfigurationActivity.this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         private boolean isLightMode;
-        private DatabaseManager dbManager;
-        @SuppressLint("StaticFieldLeak")
-        private static Context c;
-        @SuppressLint("WrongConstant")
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
+
             SwitchPreference darkLightPreference = getPreferenceManager().findPreference("lightDark");
-            SwitchPreference clearDatabaseCachePreference = getPreferenceManager().findPreference("cache");
             isLightMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO;
-            assert clearDatabaseCachePreference != null;
-            clearDatabaseCachePreference.setChecked(false);
-
-            clearDatabaseCachePreference.setOnPreferenceClickListener(preference -> {
-                dbManager.clearDatabase();
-                Toast.makeText(c, "Database caché cleared!", Toast.LENGTH_LONG).show();
-                try{
-                    Intent intent = new Intent(c, LoadActivity.class);
-                    startActivity(intent);
-                    return true;
-                }catch(Exception ignored){
-                    return false;
-                }
-            });
-
             assert darkLightPreference != null;
             darkLightPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 isLightMode = !isLightMode;
-                int mode = isLightMode ? MODE_NIGHT_NO : MODE_NIGHT_YES;
+                @AppCompatDelegate.NightMode int mode = isLightMode ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
                 AppCompatDelegate.setDefaultNightMode(mode);
                 return isLightMode;
             });

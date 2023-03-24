@@ -1,21 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory>
-        <ListPreference>
-
-        </ListPreference>
-    </PreferenceCategory>
-
     <PreferenceCategory app:title="Visibility">
         <SwitchPreference app:title="Light/Dark mode" app:key="lightDark">
-        </SwitchPreference>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="Security">
-
-        <SwitchPreference app:title="Clear Database Caché" app:key="cache">
         </SwitchPreference>
 
     </PreferenceCategory>
