@@ -38,6 +38,9 @@ public class PlanetsSelector extends AppCompatActivity {
         ImageView earth = findViewById(R.id.earth);
         ImageView mars = findViewById(R.id.mars);
 
+        earth.setImageResource(R.drawable.earth_image);
+        mars.setImageResource(R.drawable.mars_image);
+
         earth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,61 +9,65 @@
     <include
         android:id="@+id/include"
         layout="@layout/base_layout"
+        android:layout_width="391dp"
+        android:layout_height="63dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <ImageView
-        android:id="@+id/earth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+    <ScrollView
+        android:layout_width="393dp"
+        android:layout_height="651dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
-    <ImageView
-        android:id="@+id/mars"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="83dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:srcCompat="@tools:sample/avatars" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Earth"
-        app:layout_constraintBottom_toTopOf="@+id/mars"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/earth"
-        app:layout_constraintVertical_bias="0.0" />
+            <ImageView
+                android:id="@+id/earth"
+                android:layout_width="222dp"
+                android:layout_height="174dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="112dp"
+                tools:srcCompat="@drawable/earth_image" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:text="Mars"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mars" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="Earth" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="187dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="84dp"
-        android:text="More planets coming soon..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <ImageView
+                android:id="@+id/mars"
+                android:layout_width="222dp"
+                android:layout_height="174dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="83dp"
+                android:layout_marginBottom="15dp"
+                tools:srcCompat="@drawable/mars_image" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="17dp"
+                android:text="Mars" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="187dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="84dp"
+                android:text="More planets coming soon..." />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,7 +16,14 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.TFGApp"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDktcqL8sqYJd0kKHkm0EVyD6xTt_KN5XA"/>
+        <activity
+            android:name=".EarthActivity"
+            android:exported="false"
+            android:parentActivityName=".PlanetsSelector"/>
         <activity
             android:name=".ReportBugActivity"
             android:exported="false" />
@@ -34,17 +41,12 @@
             android:name=".ConfigurationActivity"
             android:exported="false"
             android:label="@string/title_activity_configuration"
-           android:parentActivityName=".OthersActivity" />
+            android:parentActivityName=".OthersActivity" />
         <activity
             android:name=".MarsActivity"
             android:exported="false"
             android:label="@string/title_activity_mars"
-            android:theme="@style/Theme.TFGApp.NoActionBar" />
-        <activity
-            android:name=".EarthActivity"
-            android:exported="false"
-            android:label="@string/title_activity_earth"
-            android:theme="@style/Theme.TFGApp.NoActionBar" />
+            android:parentActivityName=".PlanetsSelector" />
         <activity
             android:name=".Satellites"
             android:exported="false"
@@ -56,7 +58,7 @@
         <activity
             android:name=".LoadActivity"
             android:exported="true"
-            android:theme="@style/Theme.TFGApp.NoActionBar">
+            android:theme="@style/Theme.TFGApp.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

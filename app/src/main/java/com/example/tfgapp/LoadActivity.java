@@ -46,13 +46,16 @@ public class LoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
-        String url = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
+        String APOD_URL = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
+        String WitISS = "https://api.wheretheiss.at/v1/satellites/?id=25544";
         dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
         urls = new LinkedList<>();
         dbKeys = new LinkedList<>();
         allItemsLoaded = new LinkedList<>();
         dbObjects = new HashMap<>();
-        urls.add(url);
+        urls.add(WitISS);
+        urls.add(APOD_URL);
+        dbKeys.add("WitISS");
         dbKeys.add("APOD");
         urls.add("https://");
         //read all database

@@ -1,39 +1,28 @@
 package com.example.tfgapp;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
-import com.example.tfgapp.databinding.ActivityEarthBinding;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.tfgapp.ui.MapFragment;
+import com.google.android.gms.maps.MapView;
 
 public class EarthActivity extends AppCompatActivity {
 
-    private ActivityEarthBinding binding;
-
+    private MapView googleMaps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_earth);
 
-        binding = ActivityEarthBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        Fragment fragment = new MapFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout,fragment)
+                .commit();
 
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Añadir un GoBackButton
 
-        FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 }

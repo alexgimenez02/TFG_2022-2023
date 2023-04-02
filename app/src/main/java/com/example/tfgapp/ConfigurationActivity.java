@@ -26,6 +26,7 @@ public class ConfigurationActivity extends AppCompatActivity {
         Button greetings = findViewById(R.id.Greetings);
 
         dbCacheButton.setOnClickListener(view -> {
+            dbManager.clearDatabase();
             Toast.makeText(ConfigurationActivity.this, "Database caché cleared!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(ConfigurationActivity.this, LoadActivity.class);
             startActivity(intent);
@@ -47,7 +48,7 @@ public class ConfigurationActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Añadir un GoBackButton
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
