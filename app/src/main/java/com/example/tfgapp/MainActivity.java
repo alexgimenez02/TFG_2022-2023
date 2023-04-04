@@ -1,13 +1,11 @@
 package com.example.tfgapp;
 
-import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -106,23 +104,17 @@ public class MainActivity extends AppCompatActivity {
                                 background.setMovementMethod(LinkMovementMethod.getInstance());
                                 String text = String.format("<a href='%s'> Download </a>", imgUrl);
                                 dwld.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
-                                background.setClickable(true);
-                                background.setOnClickListener(new View.OnClickListener(){
+                                background.setOnClickListener(view -> {
+                                    imageView.buildDrawingCache(true);
+                                    Bitmap bmp = imageView.getDrawingCache(true);
+                                    WallpaperManager m=WallpaperManager.getInstance(MainActivity.this);
 
-                                    @SuppressLint("ResourceType")
-                                    @Override
-                                    public void onClick(View view) {
-                                        imageView.buildDrawingCache(true);
-                                        Bitmap bmp = imageView.getDrawingCache(true);
-                                        WallpaperManager m=WallpaperManager.getInstance(MainActivity.this);
-
-                                        try {
-                                            m.setBitmap(bmp);
-                                            Toast.makeText(MainActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                            Toast.makeText(MainActivity.this, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show();
-                                        }
+                                    try {
+                                        m.setBitmap(bmp);
+                                        Toast.makeText(MainActivity.this, "Wallpaper Set Successfully!!", Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(MainActivity.this, "Setting WallPaper Failed!!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } catch (JSONException | AssertionError e) {

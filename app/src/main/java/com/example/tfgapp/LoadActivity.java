@@ -3,6 +3,7 @@ package com.example.tfgapp;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tfgapp.HelperClasses.DatabaseManager;
@@ -22,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -42,12 +46,20 @@ public class LoadActivity extends AppCompatActivity {
     int dbKeyIndex = 0;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
         String APOD_URL = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
         String WitISS = "https://api.wheretheiss.at/v1/satellites/?id=25544";
+        DateTimeFormatter format = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime then = now.minusDays(7);
+
+        String NewsForEarth = String.format("https://newsapi.org/v2/everything?q=\"Earth\"&sources=engadget&from=%s&sortBy=relevancy&apiKey=%s",then.format(format),getResources().getString(R.string.NEWS_API_KEY));
+
         dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
         urls = new LinkedList<>();
         dbKeys = new LinkedList<>();
@@ -55,8 +67,10 @@ public class LoadActivity extends AppCompatActivity {
         dbObjects = new HashMap<>();
         urls.add(WitISS);
         urls.add(APOD_URL);
+        urls.add(NewsForEarth);
         dbKeys.add("WitISS");
         dbKeys.add("APOD");
+        dbKeys.add("NEarth");
         urls.add("https://");
         //read all database
         for(String key: dbKeys){

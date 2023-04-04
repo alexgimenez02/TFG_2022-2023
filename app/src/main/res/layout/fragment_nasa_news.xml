@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.NasaNewsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/NewsEarthTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="News Title"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <TextView
+                android:id="@+id/NewsAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="News Author"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/NewsEarthImage"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/earth_image" />
+
+            <TextView
+                android:id="@+id/NewsDate"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:text="NewsDate"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/NewsBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NewsBody"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/NewsURL"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:text="NewsURL"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

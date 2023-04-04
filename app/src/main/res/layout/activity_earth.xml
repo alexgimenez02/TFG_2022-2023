@@ -41,6 +41,19 @@
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
+            <FrameLayout
+                android:id="@+id/frame_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView2"
+                android:layout_width="match_parent"
+                android:layout_height="232dp"
+                android:visibility="invisible" />
+
 
         </LinearLayout>
     </ScrollView>
