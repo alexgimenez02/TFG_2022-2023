@@ -27,7 +27,7 @@ public class EarthActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.frame_layout2,fragment2)
                 .commit();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Añadir un GoBackButton
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 }

@@ -5,7 +5,139 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Satellites">
-    <include layout="@layout/base_layout"/>
+
+    <include
+        android:id="@+id/include3"
+        layout="@layout/base_layout"
+        android:layout_width="410dp"
+        android:layout_height="102dp" />
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="554dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/NaturalTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Natural"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/moon_clickable"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:srcCompat="@drawable/moon_image" />
+
+            <TextView
+                android:id="@+id/ImageFooter1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Moon"
+                android:textAlignment="center" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView3"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="More to come..."
+                android:textAlignment="center"
+                android:textColor="#4A4A4A" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView6"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/ArtificialTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Artificial"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/james_web_clickable"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:srcCompat="@drawable/james_webb_space_telescope" />
+
+            <TextView
+                android:id="@+id/ImageFooter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="James Web Space Telescope"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/Hubble_clickable"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:srcCompat="@drawable/hubble_space_telescope" />
+
+            <TextView
+                android:id="@+id/ImageFooter3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hubble Space Telescope"
+                android:textAlignment="center" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView4"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="More to come..."
+                android:textAlignment="center"
+                android:textColor="#4A4A4A" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:id="@+id/mockView5"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

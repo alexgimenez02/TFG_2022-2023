@@ -66,11 +66,11 @@ public class LoadActivity extends AppCompatActivity {
         allItemsLoaded = new LinkedList<>();
         dbObjects = new HashMap<>();
         urls.add(WitISS);
-        urls.add(APOD_URL);
         urls.add(NewsForEarth);
+        urls.add(APOD_URL);
         dbKeys.add("WitISS");
-        dbKeys.add("APOD");
         dbKeys.add("NEarth");
+        dbKeys.add("APOD");
         urls.add("https://");
         //read all database
         for(String key: dbKeys){
@@ -110,6 +110,7 @@ public class LoadActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         Request request = null;
+        Object lock = new Object();
 
         for (String url: urls) {
 
@@ -158,9 +159,11 @@ public class LoadActivity extends AppCompatActivity {
                         LoadActivity.this.runOnUiThread(() -> {
                             try {
                                 JSONObject obj = new JSONObject(myResponse);
-                                dbManager.writeToDatabase(LoadActivity.this.dbKeys.get(LoadActivity.this.dbKeyIndex),obj);
-                                LoadActivity.this.allItemsLoaded.add(LoadActivity.this.dbKeyIndex, true);
-                                LoadActivity.this.dbKeyIndex++;
+                                synchronized (lock) {
+                                    dbManager.writeToDatabase(LoadActivity.this.dbKeys.get(LoadActivity.this.dbKeyIndex), obj);
+                                    LoadActivity.this.allItemsLoaded.add(LoadActivity.this.dbKeyIndex, true);
+                                    LoadActivity.this.dbKeyIndex++;
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
