@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+
 
 public class NasaNewsFragment extends Fragment {
 
@@ -47,37 +49,44 @@ public class NasaNewsFragment extends Fragment {
                 String readedValue = (String) snapshot.getValue();
                 try {
                     assert readedValue != null;
-                    //Fetch the FIRST article
-                    newsFetched[0] = new JSONObject(readedValue);
-                    JSONArray articles = newsFetched[0].getJSONArray("articles");
-                    JSONObject firstArticle = articles.getJSONObject(0);
-
-                    TextView title = requireView().findViewById(R.id.NewsEarthTitle);
+                    TextView title = requireView().findViewById(R.id.NewsMarsTitle);
                     TextView body = requireView().findViewById(R.id.NewsBody);
                     TextView author = requireView().findViewById(R.id.NewsAuthor);
                     TextView viewDate = requireView().findViewById(R.id.NewsDate);
                     TextView url = requireView().findViewById(R.id.NewsURL);
+                    ImageView imageView = requireView().findViewById(R.id.NewsMarsImage);
+                    //Fetch the FIRST article
+                    newsFetched[0] = new JSONObject(readedValue);
+                    if(newsFetched[0].getInt("totalResults") == 0){
+                        Toast.makeText(getContext(), "No news from Earth of the last 7 days", Toast.LENGTH_LONG);
+                        title.setVisibility(View.INVISIBLE);
+                        body.setVisibility(View.INVISIBLE);
+                        author.setVisibility(View.INVISIBLE);
+                        viewDate.setVisibility(View.INVISIBLE);
+                        url.setVisibility(View.INVISIBLE);
+                        imageView.setVisibility(View.INVISIBLE);
+                    } else {
+                        JSONArray articles = newsFetched[0].getJSONArray("articles");
+                        JSONObject firstArticle = articles.getJSONObject(new Random().nextInt(articles.length()));
 
-                    title.setText(firstArticle.getString("title"));
-                    String contentFromNews = firstArticle.getString("content");
-                    String[] splittedContent = contentFromNews.split("…");
-                    body.setText(String.format("%s... To finish reading this article, go to the URL below",splittedContent[0] ));
-                    author.setText(String.format("By: %s",firstArticle.getString("author")));
+                        title.setText(firstArticle.getString("title"));
+                        String contentFromNews = firstArticle.getString("content");
+                        String[] splittedContent = contentFromNews.split("…");
+                        body.setText(String.format("%s... To finish reading this article, go to the URL below", splittedContent[0]));
+                        author.setText(String.format("By: %s", firstArticle.getString("author")));
 
-                    String date = firstArticle.getString("publishedAt");
-                    String[] splittedDate = date.split("T");
-                    viewDate.setText(String.format("%s",splittedDate[0]));
-                    url.setClickable(true);
-                    url.setMovementMethod(LinkMovementMethod.getInstance());
-                    url.setTextColor(R.color.teal_700);
-                    String text = String.format("<a href='%s'> Read more </a>", firstArticle.getString("url"));
-                    url.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
+                        String date = firstArticle.getString("publishedAt");
+                        String[] splittedDate = date.split("T");
+                        viewDate.setText(String.format("%s", splittedDate[0]));
+                        url.setClickable(true);
+                        url.setMovementMethod(LinkMovementMethod.getInstance());
+                        url.setTextColor(R.color.teal_700);
+                        String text = String.format("<a href='%s'> Read more </a>", firstArticle.getString("url"));
+                        url.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
 
-                    String imgUrl = firstArticle.getString("urlToImage");
-                    ImageView imageView = requireView().findViewById(R.id.NewsEarthImage);
-                    Glide.with(NasaNewsFragment.this).load(imgUrl).into(imageView);
-
-
+                        String imgUrl = firstArticle.getString("urlToImage");
+                        Glide.with(NasaNewsFragment.this).load(imgUrl).into(imageView);
+                    }
                 } catch (JSONException e) {
                     Toast.makeText(getContext(),"Error getting news loaded", Toast.LENGTH_LONG).show();
                 }

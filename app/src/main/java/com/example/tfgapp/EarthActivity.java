@@ -7,11 +7,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.tfgapp.ui.MapFragment;
 import com.example.tfgapp.ui.NasaNewsFragment;
-import com.google.android.gms.maps.MapView;
 
 public class EarthActivity extends AppCompatActivity {
 
-    private MapView googleMaps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

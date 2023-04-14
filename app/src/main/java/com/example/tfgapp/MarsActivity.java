@@ -3,29 +3,30 @@ package com.example.tfgapp;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import com.example.tfgapp.databinding.ActivityMarsBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.tfgapp.ui.MarsNewsFragment;
+import com.example.tfgapp.ui.MarsPhotoFragment;
 
 public class MarsActivity extends AppCompatActivity {
-
-    private ActivityMarsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mars);
 
-        binding = ActivityMarsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        Fragment fragment = new MarsPhotoFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout4,fragment)
+                .commit();
 
-//        Toolbar toolbar = binding.toolbar;
-////        setSupportActionBar(toolbar);
-//        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-//        toolBarLayout.setTitle(getTitle());
+        Fragment fragment2 = new MarsNewsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout3,fragment2)
+                .commit();
 
-        FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -4,20 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:id="@+id/MainLayout"
             tools:context=".MainActivity">
+                <include
+                    android:id="@+id/include"
+                    layout="@layout/base_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp" />
+
                 <TextView
                     android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="176dp"
-                    android:layout_marginTop="34dp"
-                    android:layout_marginEnd="177dp"
-                    android:layout_marginBottom="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Title"
+                    android:textAlignment="center"
                     app:layout_constraintBottom_toTopOf="@+id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -25,142 +31,87 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="400dp"
-                    android:layout_height="158dp"
-                    android:layout_marginStart="141dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="142dp"
-                    android:layout_marginBottom="2dp"
-                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView1"
-                    tools:srcCompat="@tools:sample/avatars"
-                    android:focusable="true" />
-
-
+                    app:srcCompat="@drawable/mars_image" />
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="176dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="177dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Date"
+                    android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
                     android:text="Description"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+                <androidx.constraintlayout.utils.widget.MockView
+                    android:id="@+id/mockView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:visibility="invisible" />
 
-                <Button
-                    android:id="@+id/Home"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="5dp"
-                    android:textSize="8sp"
-                    android:text="Home"
-                    app:layout_constraintEnd_toStartOf="@+id/planets"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/planets"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="5dp"
-                    android:textSize="8sp"
-                    android:text="Planets"
-                    app:layout_constraintEnd_toStartOf="@+id/satellites"
-                    app:layout_constraintStart_toEndOf="@+id/Home"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/Download"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="100dp"
+                            android:clickable="true"
+                            android:text="Download"
 
-                <Button
-                    android:id="@+id/satellites"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="5dp"
-                    android:textSize="8sp"
-                    android:text="Satellites"
-                    app:layout_constraintEnd_toStartOf="@+id/others"
-                    app:layout_constraintStart_toEndOf="@+id/planets"
-                    app:layout_constraintTop_toTopOf="parent" />
+                            android:textColorLink="@android:color/holo_blue_dark"
+                            app:layout_constraintEnd_toStartOf="@+id/textView5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                <Button
-                    android:id="@+id/others"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="10dp"
-                    android:textSize="8sp"
-                    android:text="Others"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/satellites"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="or"
+                            app:layout_constraintEnd_toStartOf="@+id/SABG"
+                            app:layout_constraintStart_toEndOf="@+id/Download"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                <TextView
-                    android:id="@+id/Download"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="2dp"
-                    android:clickable="true"
-                    android:text="Download"
-                    android:textColorLink="@android:color/holo_blue_dark"
+                        <TextView
+                            android:id="@+id/SABG"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:text="Set As Background"
 
-                    app:layout_constraintEnd_toStartOf="@+id/textView5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                            android:textColor="@android:color/holo_blue_dark"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView5"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/SABG"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="100dp"
-                    android:clickable="true"
-                    android:text="Set As Background"
+                <androidx.constraintlayout.utils.widget.MockView
+                    android:id="@+id/mockView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:visibility="invisible" />
 
-                    android:textColor="@android:color/holo_blue_dark"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="2dp"
-                    android:text="or"
-                    app:layout_constraintEnd_toStartOf="@+id/SABG"
-                    app:layout_constraintStart_toEndOf="@+id/Download"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
 
