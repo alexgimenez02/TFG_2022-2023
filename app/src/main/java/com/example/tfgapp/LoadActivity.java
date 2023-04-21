@@ -35,7 +35,6 @@ public class LoadActivity extends AppCompatActivity {
     private LinkedList<String> dbKeys;
     private LinkedList<Boolean> allItemsLoaded;
     private HashMap<String, JSONObject> dbObjects;
-    int dbKeyIndex = 0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,13 +47,19 @@ public class LoadActivity extends AppCompatActivity {
         DateTimeFormatter format = DateTimeFormatter
                 .ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime then = now.minusDays(7);
+        LocalDateTime oneWeek = now.minusDays(7);
+        LocalDateTime threeWeeks = now.minusDays(21);
         LocalDateTime yesterday = now.minusDays(1);
 
-        String NewsForEarth = String.format("https://newsapi.org/v2/everything?q=\"Earth\"&sources=engadget&from=%s&sortBy=relevancy&apiKey=%s", then.format(format), getResources().getString(R.string.NEWS_API_KEY));
-        String NewsForMars = String.format("https://newsapi.org/v2/everything?q=\"Mars\"&sources=engadget&from=%s&sortBy=relevancy&apiKey=%s", then.format(format), getResources().getString(R.string.NEWS_API_KEY));
-
+        String NewsForEarth = String.format("https://newsapi.org/v2/everything?q=\"Earth\"&sources=engadget&from=%s&sortBy=relevancy&language=en&apiKey=%s", oneWeek.format(format), getResources().getString(R.string.NEWS_API_KEY));
+        String NewsForMars = String.format("https://newsapi.org/v2/everything?q=\"Mars\"&sources=engadget&from=%s&sortBy=relevancy&language=en&apiKey=%s", threeWeeks.format(format), getResources().getString(R.string.NEWS_API_KEY));
+        String NewsForMoon = String.format("https://newsapi.org/v2/everything?q=\"Moon\"&sources=engadget&from=%s&sortBy=relevancy&language=en&apiKey=%s", oneWeek.format(format), getResources().getString(R.string.NEWS_API_KEY));
+        String NewsForJWST = String.format("https://newsapi.org/v2/everything?q=\"James Webb Telescope\"&from=%s&sortBy=relevancy&language=en&apiKey=%s", oneWeek.format(format), getResources().getString(R.string.NEWS_API_KEY));
+        String NewsForHubble = String.format("https://newsapi.org/v2/everything?q=\"Hubble\"&from=%s&sortBy=relevancy&language=en&apiKey=%s", oneWeek.format(format), getResources().getString(R.string.NEWS_API_KEY));
         String marsPhotos = String.format("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=%s&api_key=%s", yesterday.format(format), getResources().getString(R.string.NASA_API_KEY));
+        String JamesWebbImages = "https://images-api.nasa.gov/search?q=James Webb&media_type=image";
+        String HubbleImages = "https://images-api.nasa.gov/search?q=Hubble&media_type=image";
+
 
         dbManager = new DatabaseManager(getResources().getString(R.string.FirebaseURL));
         urls = new LinkedList<>();
@@ -64,11 +69,21 @@ public class LoadActivity extends AppCompatActivity {
         urls.add(WitISS);
         urls.add(NewsForEarth);
         urls.add(NewsForMars);
+        urls.add(NewsForMoon);
+        urls.add(NewsForJWST);
+        urls.add(NewsForHubble);
+        urls.add(JamesWebbImages);
+        urls.add(HubbleImages);
         urls.add(APOD_URL);
         urls.add(marsPhotos);
         dbKeys.add("WitISS");
         dbKeys.add("NEarth");
         dbKeys.add("NMars");
+        dbKeys.add("NMoon");
+        dbKeys.add("NJamesWebb");
+        dbKeys.add("NHubble");
+        dbKeys.add("PJWST");
+        dbKeys.add("PHubble");
         dbKeys.add("APOD");
         dbKeys.add("MPhotos");
         //read all database
@@ -113,3 +128,4 @@ public class LoadActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+

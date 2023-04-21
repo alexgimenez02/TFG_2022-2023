@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MarsNewsFragment">
+    tools:context=".ui.JamesWebbFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
-            android:id="@+id/NewsMarsTitle"
+            android:id="@+id/textview30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="News Title"
@@ -26,7 +25,7 @@
             android:textAlignment="center" />
 
         <ImageView
-            android:id="@+id/NewsMarsImage"
+            android:id="@+id/NewsMoonImage"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:src="@drawable/earth_image" />
@@ -55,7 +54,6 @@
             android:text="NewsURL"
             android:textAlignment="center"
             android:textSize="20sp" />
-
     </LinearLayout>
 
 </FrameLayout>

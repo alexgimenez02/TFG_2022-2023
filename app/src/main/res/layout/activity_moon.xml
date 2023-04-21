@@ -6,4 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MoonActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Current Moon Phase"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/moonPhase"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_horizontal"
+                android:padding="4dp"
+                android:text="First Quarter"
+                android:textSize="16sp" />
+
+            <!-- moon graphics -->
+
+            <com.example.tfgapp.HelperClasses.Moon
+                android:id="@+id/moon1"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:background="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_horizontal"
+                android:text="Moon news"
+                android:textSize="24sp" />
+
+            <FrameLayout
+                android:id="@+id/moonNewsFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.constraintlayout.utils.widget.MockView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
