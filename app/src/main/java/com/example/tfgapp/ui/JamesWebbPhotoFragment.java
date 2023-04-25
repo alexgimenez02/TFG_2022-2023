@@ -27,12 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Random;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link JamesWebbPhotoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class JamesWebbPhotoFragment extends Fragment {
 
     DatabaseManager dbManager;

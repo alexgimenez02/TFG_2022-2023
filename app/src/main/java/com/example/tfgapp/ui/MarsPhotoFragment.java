@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,15 +47,21 @@ public class MarsPhotoFragment extends Fragment {
                     //Fetch the FIRST article
                     photoFetched[0] = new JSONObject(readedValue);
                     JSONArray photos = photoFetched[0].getJSONArray("photos");
-                    JSONObject firstQuery = photos.getJSONObject(new Random().nextInt(photos.length()));
-
-                    String imgUrl = firstQuery.getString("img_src");
                     ImageView imageView = requireView().findViewById(R.id.MarsPhoto);
-                    Glide.with(MarsPhotoFragment.this).load(imgUrl).into(imageView);
+                    if(photos.length() == 0)
+                    {
+                        imageView.setVisibility(View.INVISIBLE);
+                        TextView placeholder = requireView().findViewById(R.id.PlaceholderText);
+                        placeholder.setVisibility(View.VISIBLE);
 
+                    }else {
+                        JSONObject firstQuery = photos.getJSONObject(new Random().nextInt(photos.length()));
 
+                        String imgUrl = firstQuery.getString("img_src");
+                        Glide.with(MarsPhotoFragment.this).load(imgUrl).into(imageView);
+                    }
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(),"Error getting news loaded", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Error getting photos loaded", Toast.LENGTH_LONG).show();
                 }
             }
 

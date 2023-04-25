@@ -14,5 +14,12 @@
         android:scaleType="fitCenter"
         tools:srcCompat="@drawable/earth_image" />
 
+    <TextView
+        android:id="@+id/PlaceholderText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No image could be fetched"
+        android:visibility="invisible" />
+
 
 </FrameLayout>

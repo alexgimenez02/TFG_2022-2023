@@ -50,6 +50,7 @@ public class LoadActivity extends AppCompatActivity {
         LocalDateTime oneWeek = now.minusDays(7);
         LocalDateTime threeWeeks = now.minusDays(21);
         LocalDateTime yesterday = now.minusDays(1);
+//        LocalDateTime twoDays = now.minusDays(2);
 
         String NewsForEarth = String.format("https://newsapi.org/v2/everything?q=\"Earth\"&sources=engadget&from=%s&sortBy=relevancy&language=en&apiKey=%s", oneWeek.format(format), getResources().getString(R.string.NEWS_API_KEY));
         String NewsForMars = String.format("https://newsapi.org/v2/everything?q=\"Mars\"&sources=engadget&from=%s&sortBy=relevancy&language=en&apiKey=%s", threeWeeks.format(format), getResources().getString(R.string.NEWS_API_KEY));
