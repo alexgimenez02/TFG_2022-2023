@@ -1,64 +1,55 @@
 package com.example.tfgapp;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
+import android.widget.TabHost;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
 
-import com.example.tfgapp.databinding.ActivityQueryBinding;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.tfgapp.ui.QueryAPOD;
+import com.example.tfgapp.ui.QueryNEWS;
+import com.example.tfgapp.ui.QueryROVER;
 
 public class QueryActivity extends AppCompatActivity {
-
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityQueryBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_query);
 
-        binding = ActivityQueryBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarQuery.toolbar);
-        binding.appBarQuery.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_query);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
+        Fragment fragmentAPOD = new QueryAPOD();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.APOD,fragmentAPOD)
+                .commit();
+        Fragment fragmentRover = new QueryROVER();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.ROVER,fragmentRover)
+                .commit();
+        Fragment fragmentNews = new QueryNEWS();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.NEWS,fragmentNews)
+                .commit();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.query, menu);
-        return true;
-    }
+        TabHost tabHost = (TabHost) findViewById(R.id.tabhost);
+        tabHost.setup();
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_query);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        TabHost.TabSpec ts = tabHost.newTabSpec("APOD");
+        ts.setContent(R.id.APOD);
+        ts.setIndicator("APOD");
+        tabHost.addTab(ts);
+
+        TabHost.TabSpec ts2 = tabHost.newTabSpec("ROVER");
+        ts2.setContent(R.id.ROVER);
+        ts2.setIndicator("ROVER");
+        tabHost.addTab(ts2);
+
+        TabHost.TabSpec ts3 = tabHost.newTabSpec("NEWS");
+        ts3.setContent(R.id.NEWS);
+        ts3.setIndicator("NEWS");
+        tabHost.addTab(ts3);
     }
 }
