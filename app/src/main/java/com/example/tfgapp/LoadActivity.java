@@ -3,6 +3,7 @@ package com.example.tfgapp;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -42,6 +43,9 @@ public class LoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
+
+
+
         String APOD_URL = String.format("https://api.nasa.gov/planetary/apod?api_key=%s", getResources().getString(R.string.NASA_API_KEY));
         String WitISS = "https://api.wheretheiss.at/v1/satellites/?id=25544";
         DateTimeFormatter format = DateTimeFormatter
@@ -124,9 +128,12 @@ public class LoadActivity extends AppCompatActivity {
         for(int i = 0; i < dbKeys.size(); i++){
             dbManager.writeToDatabase(dbKeys.get(i),results.get(i));
         }
-        Toast.makeText(LoadActivity.this, "Loading all API calls!", Toast.LENGTH_SHORT).show();
+
+
         Intent intent = new Intent(LoadActivity.this,MainActivity.class);
-        startActivity(intent);
+        Button btn = findViewById(R.id.button5);
+        btn.setOnClickListener(view -> startActivity(intent));
+
     }
 }
 

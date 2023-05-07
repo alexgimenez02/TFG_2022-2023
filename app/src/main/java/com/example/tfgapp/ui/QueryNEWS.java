@@ -61,6 +61,11 @@ public class QueryNEWS extends Fragment {
                 try {
                     JSONObject result = getApiCall(url).get();
                     JSONArray articles = result.getJSONArray("articles");
+                    if(articles.length() == 0)
+                    {
+                        Toast.makeText(getContext(),String.format("No news about %s found!",keyword.getText().toString()),Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     JSONObject firstArticle = articles.getJSONObject(new Random().nextInt(articles.length()));
                     title.setText((CharSequence) firstArticle.get("title"));
                     link.setText((CharSequence) String.format("<a href='%s'> Link to news </a>",firstArticle.get("url")));

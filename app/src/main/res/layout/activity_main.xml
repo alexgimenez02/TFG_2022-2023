@@ -24,6 +24,7 @@
                     android:layout_height="wrap_content"
                     android:text="Title"
                     android:textAlignment="center"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toTopOf="@+id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

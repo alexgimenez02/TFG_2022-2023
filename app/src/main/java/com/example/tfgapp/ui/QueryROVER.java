@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -56,6 +57,11 @@ public class QueryROVER extends Fragment {
                 try {
                     JSONObject result = getApiCall(url).get();
                     JSONArray photos = result.getJSONArray("photos");
+                    if(photos.length() == 0)
+                    {
+                        Toast.makeText(getContext(), String.format("No images at date: %s",etPlannedDate.getText().toString()), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     JSONObject randPhoto = photos.getJSONObject(new Random().nextInt(photos.length()));
 
                     fullName.setText((CharSequence) randPhoto.getJSONObject("camera").get("full_name"));
@@ -66,7 +72,7 @@ public class QueryROVER extends Fragment {
 
 
                 } catch (ExecutionException |InterruptedException | JSONException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
