@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TFGApp</string>
+    <string name="app_name">Astromonews</string>
     <string name="tab_text_1">Home</string>
     <string name="tab_text_2">Planets</string>
     <string name="tab_text_3">Satellites</string>

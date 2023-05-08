@@ -44,12 +44,13 @@
             android:parentActivityName=".PlanetsSelector" />
         <activity
             android:name=".ReportBugActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".OthersActivity"/>
         <activity
             android:name=".GamesSelectorActivity"
             android:exported="false"
             android:label="@string/title_activity_games_selector"
-            android:theme="@style/Theme.TFGApp.NoActionBar" />
+            android:parentActivityName=".OthersActivity" />
         <activity
             android:name=".ConfigurationActivity"
             android:exported="false"
