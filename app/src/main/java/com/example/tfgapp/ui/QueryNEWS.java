@@ -1,6 +1,9 @@
 package com.example.tfgapp.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +42,8 @@ public class QueryNEWS extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_query_news, container, false);
 
-        etPlannedDate = (EditText) view.findViewById(R.id.etPlannedDate);
-        keyword = (EditText) view.findViewById(R.id.KeyWordInput);
+        etPlannedDate = view.findViewById(R.id.etPlannedDate);
+        keyword = view.findViewById(R.id.KeyWordInput);
         etPlannedDate.setOnClickListener(view1 -> {
             switch (view1.getId()) {
                 case R.id.etPlannedDate:
@@ -66,15 +69,26 @@ public class QueryNEWS extends Fragment {
                         Toast.makeText(getContext(),String.format("No news about %s found!",keyword.getText().toString()),Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    JSONObject firstArticle = articles.getJSONObject(new Random().nextInt(articles.length()));
-                    title.setText((CharSequence) firstArticle.get("title"));
-                    link.setText((CharSequence) String.format("<a href='%s'> Link to news </a>",firstArticle.get("url")));
-
-                    Glide.with(QueryNEWS.this).load(firstArticle.get("urlToImage")).into(imageView);
-
                     title.setVisibility(View.VISIBLE);
                     link.setVisibility(View.VISIBLE);
                     imageView.setVisibility(View.VISIBLE);
+                    JSONObject firstArticle = articles.getJSONObject(new Random().nextInt(articles.length()));
+                    title.setText((CharSequence) firstArticle.get("title"));
+                    link.setClickable(true);
+
+                    String linkToNews = String.format("<a href='%s'> Link to news </a>",firstArticle.get("url"));
+                    String currentUrl = (String) firstArticle.get("url");
+                    link.setText(Html.fromHtml(linkToNews, Html.FROM_HTML_MODE_COMPACT));
+
+                    link.setOnClickListener(view12 -> {
+                        Uri uriUrl = Uri.parse(currentUrl);
+                        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                        startActivity(launchBrowser);
+                    });
+
+                    Glide.with(QueryNEWS.this).load(firstArticle.get("urlToImage")).into(imageView);
+
+
 
                 } catch (ExecutionException | InterruptedException | JSONException e) {
                     Toast.makeText(getContext(),"Error fetching API!",Toast.LENGTH_SHORT).show();
@@ -85,7 +99,6 @@ public class QueryNEWS extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
             // +1 because January is zero
