@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                                 background.setMovementMethod(LinkMovementMethod.getInstance());
                                 String text = String.format("<a href='%s'> Download </a>", imgUrl);
                                 dwld.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
+                                background.setText(Html.fromHtml("<p><u>Set As Background</u></p>"));
                                 background.setOnClickListener(view -> {
                                     imageView.buildDrawingCache(true);
                                     Bitmap bmp = imageView.getDrawingCache(true);

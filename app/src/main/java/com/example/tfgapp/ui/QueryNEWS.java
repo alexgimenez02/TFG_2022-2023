@@ -49,7 +49,7 @@ public class QueryNEWS extends Fragment {
             }
         });
 
-        Button button = view.findViewById(R.id.button3);
+        Button button = view.findViewById(R.id.button);
         button.setOnClickListener(view -> {
             String fetchedDate = etPlannedDate.getText().toString();
             if(!"".equals(fetchedDate) && !"".equals(keyword.getText().toString())) {

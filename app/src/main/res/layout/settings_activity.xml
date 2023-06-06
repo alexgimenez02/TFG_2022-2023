@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,10 +10,9 @@
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
     </FrameLayout>
-
     <LinearLayout
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -21,22 +21,32 @@
 
         <Button
             android:id="@+id/ClearDBButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clear Database Caché" />
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:text="Clear Database Caché"
+            android:layout_marginBottom="15dp"
 
-
+            app:cornerRadius="30dp"
+            />
         <Button
             android:id="@+id/TermsAndConditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Terms and Conditions" />
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:text="Terms and Conditions"
+            app:cornerRadius="30dp"
+            />
 
         <Button
             android:id="@+id/Greetings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Greetings" />
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:text="Greetings"
+            app:cornerRadius="30dp"
+            />
     </LinearLayout>
-
 </LinearLayout>

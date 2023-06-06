@@ -46,7 +46,7 @@ public class QueryROVER extends Fragment {
                     break;
             }
         });
-        Button button = view.findViewById(R.id.button4);
+        Button button = view.findViewById(R.id.button);
         button.setOnClickListener(view12 -> {
             String fetchedDate = etPlannedDate.getText().toString();
             String url = String.format("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=%s&api_key=%s", etPlannedDate.getText().toString(), getResources().getString(R.string.NASA_API_KEY));

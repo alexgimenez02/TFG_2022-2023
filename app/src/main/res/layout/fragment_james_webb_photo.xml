@@ -14,18 +14,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginBottom="5dp"/>
+            android:textSize="16sp"
+            android:layout_marginBottom="10dp"/>
         <ImageView
             android:id="@+id/JWSTimage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             />
         <TextView
             android:id="@+id/NewsBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             />
         <TextView
             android:id="@+id/NewsDate"
@@ -35,6 +37,4 @@
             android:layout_marginBottom="5dp"
             />
     </LinearLayout>
-
-
 </FrameLayout>

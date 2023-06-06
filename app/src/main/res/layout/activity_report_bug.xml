@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ReportBugActivity">
 
 
@@ -13,32 +14,20 @@
         android:layout_height="47dp"
         android:layout_marginTop="68dp"
         android:text="Report a bug"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <Button
-        android:id="@+id/Send"
-        android:layout_width="wrap_content"
+
+
+    <EditText
+        android:id="@+id/inputTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Send Bug report"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInput" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="Go Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Send" />
+        android:layout_marginBottom="5dp"
+        android:ems="10"
+        android:hint="Subject"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/textInput"
@@ -48,21 +37,16 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="Write here your bug report"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputTitle" />
+        android:inputType="textMultiLine" />
 
-    <EditText
-        android:id="@+id/inputTitle"
-        android:layout_width="match_parent"
+
+
+    <Button
+        android:id="@+id/Send"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="Subject"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BugOrFeedback" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Send Bug report"
+        android:layout_gravity="center"
+        app:cornerRadius="10dp"/>
+</LinearLayout>

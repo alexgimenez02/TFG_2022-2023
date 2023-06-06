@@ -79,7 +79,7 @@ public class LoadActivity extends AppCompatActivity {
         urls.add(NewsForHubble);
         urls.add(JamesWebbImages);
         urls.add(HubbleImages);
-        urls.add(APOD_URL);
+//        urls.add(APOD_URL);
         urls.add(marsPhotos);
         dbKeys.add("WitISS");
         dbKeys.add("NEarth");
@@ -89,7 +89,7 @@ public class LoadActivity extends AppCompatActivity {
         dbKeys.add("NHubble");
         dbKeys.add("PJWST");
         dbKeys.add("PHubble");
-        dbKeys.add("APOD");
+//        dbKeys.add("APOD");
         dbKeys.add("MPhotos");
         //read all database
         ExecutorService executorService = Executors.newFixedThreadPool(urls.size());
