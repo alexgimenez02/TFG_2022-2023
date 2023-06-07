@@ -7,4 +7,30 @@
     android:orientation="vertical"
     tools:context=".GamesSelectorActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Space Invaders"
+        android:layout_gravity="center"
+        android:layout_marginTop="75dp"
+        android:textSize="42sp"
+        />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/enemy_sprite" />
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:text="Play"
+        android:textAlignment="center"
+        android:textSize="23sp"
+        app:cornerRadius="300dp" />
 </LinearLayout>
