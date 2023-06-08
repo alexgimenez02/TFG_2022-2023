@@ -22,11 +22,11 @@ public class GamesSelectorActivity extends AppCompatActivity {
            String packageName = "com.DefaultCompany.com.unity.template.mobile2D";
             Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
             if (intent != null) {
-                Toast.makeText(this, "Launching game!", Toast.LENGTH_SHORT);
+                Toast.makeText(GamesSelectorActivity.this, "Launching game!", Toast.LENGTH_SHORT);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "No Space Invaders Game installed", Toast.LENGTH_SHORT);
+                Toast.makeText(GamesSelectorActivity.this, "No Space Invaders Game installed", Toast.LENGTH_SHORT);
             }
         });
     }

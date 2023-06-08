@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDktcqL8sqYJd0kKHkm0EVyD6xTt_KN5XA" />
+            android:value="${googleApiKey}" />
 
         <activity
             android:name=".EarthActivity"
