@@ -126,7 +126,8 @@ public class LoadActivity extends AppCompatActivity {
         executorService.shutdown();
 
         for(int i = 0; i < dbKeys.size(); i++){
-            dbManager.writeToDatabase(dbKeys.get(i),results.get(i));
+            if(results.get(i) != null)
+                dbManager.writeToDatabase(dbKeys.get(i),results.get(i));
         }
 
 
